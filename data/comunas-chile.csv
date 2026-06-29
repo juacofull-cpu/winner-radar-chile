@@ -1,0 +1,248 @@
+comuna,region,prioridad
+Chiguayante,Biobío,1
+Concepción,Biobío,1
+Coronel,Biobío,1
+Hualpén,Biobío,1
+Hualqui,Biobío,1
+Lota,Biobío,1
+Penco,Biobío,1
+San Pedro de la Paz,Biobío,1
+Santa Juana,Biobío,1
+Talcahuano,Biobío,1
+Tomé,Biobío,1
+Coquimbo,Coquimbo,1
+La Serena,Coquimbo,1
+Concón,Valparaíso,1
+Quilpué,Valparaíso,1
+Valparaíso,Valparaíso,1
+Villa Alemana,Valparaíso,1
+Viña del Mar,Valparaíso,1
+Antofagasta,Antofagasta,2
+Calama,Antofagasta,2
+Arica,Arica y Parinacota,2
+Copiapó,Atacama,2
+Los Ángeles,Biobío,2
+Ovalle,Coquimbo,2
+Padre Las Casas,La Araucanía,2
+Temuco,La Araucanía,2
+Osorno,Los Lagos,2
+Puerto Montt,Los Lagos,2
+Valdivia,Los Ríos,2
+Punta Arenas,Magallanes,2
+Curicó,Maule,2
+Linares,Maule,2
+Talca,Maule,2
+Machalí,O'Higgins,2
+Rancagua,O'Higgins,2
+Alto Hospicio,Tarapacá,2
+Iquique,Tarapacá,2
+Chillán,Ñuble,2
+Chillán Viejo,Ñuble,2
+Mejillones,Antofagasta,3
+Taltal,Antofagasta,3
+Tocopilla,Antofagasta,3
+Camarones,Arica y Parinacota,3
+Putre,Arica y Parinacota,3
+Caldera,Atacama,3
+Chañaral,Atacama,3
+Diego de Almagro,Atacama,3
+Vallenar,Atacama,3
+Coyhaique,Aysén,3
+Puerto Aysén,Aysén,3
+Arauco,Biobío,3
+Cabrero,Biobío,3
+Cañete,Biobío,3
+Curanilahue,Biobío,3
+Lebu,Biobío,3
+Mulchén,Biobío,3
+Nacimiento,Biobío,3
+Andacollo,Coquimbo,3
+Illapel,Coquimbo,3
+Los Vilos,Coquimbo,3
+Salamanca,Coquimbo,3
+Vicuña,Coquimbo,3
+Angol,La Araucanía,3
+Lautaro,La Araucanía,3
+Loncoche,La Araucanía,3
+Nueva Imperial,La Araucanía,3
+Pitrufquén,La Araucanía,3
+Pucón,La Araucanía,3
+Victoria,La Araucanía,3
+Villarrica,La Araucanía,3
+Ancud,Los Lagos,3
+Calbuco,Los Lagos,3
+Castro,Los Lagos,3
+Frutillar,Los Lagos,3
+Llanquihue,Los Lagos,3
+Puerto Varas,Los Lagos,3
+Purranque,Los Lagos,3
+Quellón,Los Lagos,3
+La Unión,Los Ríos,3
+Los Lagos,Los Ríos,3
+Mariquina,Los Ríos,3
+Paillaco,Los Ríos,3
+Panguipulli,Los Ríos,3
+Río Bueno,Los Ríos,3
+Porvenir,Magallanes,3
+Puerto Natales,Magallanes,3
+Cauquenes,Maule,3
+Constitución,Maule,3
+Molina,Maule,3
+Parral,Maule,3
+San Javier,Maule,3
+Graneros,O'Higgins,3
+Pichilemu,O'Higgins,3
+Rengo,O'Higgins,3
+San Fernando,O'Higgins,3
+San Vicente,O'Higgins,3
+Santa Cruz,O'Higgins,3
+Pica,Tarapacá,3
+Pozo Almonte,Tarapacá,3
+Casablanca,Valparaíso,3
+La Calera,Valparaíso,3
+Limache,Valparaíso,3
+Los Andes,Valparaíso,3
+Quillota,Valparaíso,3
+San Antonio,Valparaíso,3
+San Felipe,Valparaíso,3
+Bulnes,Ñuble,3
+Quirihue,Ñuble,3
+San Carlos,Ñuble,3
+Yungay,Ñuble,3
+María Elena,Antofagasta,4
+San Pedro de Atacama,Antofagasta,4
+Sierra Gorda,Antofagasta,4
+Alto del Carmen,Atacama,4
+Freirina,Atacama,4
+Huasco,Atacama,4
+Tierra Amarilla,Atacama,4
+Chile Chico,Aysén,4
+Cisnes,Aysén,4
+Cochrane,Aysén,4
+Puerto Cisnes,Aysén,4
+Antuco,Biobío,4
+Contulmo,Biobío,4
+Florida,Biobío,4
+Laja,Biobío,4
+Los Álamos,Biobío,4
+Mininco,Biobío,4
+Negrete,Biobío,4
+Quilleco,Biobío,4
+San Rosendo,Biobío,4
+Santa Bárbara,Biobío,4
+Tirúa,Biobío,4
+Tucapel,Biobío,4
+Yumbel,Biobío,4
+Canela,Coquimbo,4
+Combarbalá,Coquimbo,4
+La Higuera,Coquimbo,4
+Monte Patria,Coquimbo,4
+Paihuano,Coquimbo,4
+Punitaqui,Coquimbo,4
+Río Hurtado,Coquimbo,4
+Carahue,La Araucanía,4
+Collipulli,La Araucanía,4
+Cunco,La Araucanía,4
+Curacautín,La Araucanía,4
+Freire,La Araucanía,4
+Galvarino,La Araucanía,4
+Gorbea,La Araucanía,4
+Lonquimay,La Araucanía,4
+Los Sauces,La Araucanía,4
+Purén,La Araucanía,4
+Renaico,La Araucanía,4
+Teodoro Schmidt,La Araucanía,4
+Toltén,La Araucanía,4
+Traiguén,La Araucanía,4
+Vilcún,La Araucanía,4
+Chaitén,Los Lagos,4
+Chonchi,Los Lagos,4
+Cochamó,Los Lagos,4
+Dalcahue,Los Lagos,4
+Fresia,Los Lagos,4
+Hualaihué,Los Lagos,4
+Los Muermos,Los Lagos,4
+Maullín,Los Lagos,4
+Puerto Octay,Los Lagos,4
+Puyehue,Los Lagos,4
+Quemchi,Los Lagos,4
+Quinchao,Los Lagos,4
+Río Negro,Los Lagos,4
+San Pablo,Los Lagos,4
+Corral,Los Ríos,4
+Futrono,Los Ríos,4
+Lago Ranco,Los Ríos,4
+Lanco,Los Ríos,4
+Máfil,Los Ríos,4
+Natales,Magallanes,4
+Colbún,Maule,4
+Hualañé,Maule,4
+Licantén,Maule,4
+Longaví,Maule,4
+Pelarco,Maule,4
+Pencahue,Maule,4
+Río Claro,Maule,4
+Sagrada Familia,Maule,4
+San Clemente,Maule,4
+Teno,Maule,4
+Villa Alegre,Maule,4
+Yerbas Buenas,Maule,4
+Alhué,Metropolitana,4
+Buin,Metropolitana,4
+Calera de Tango,Metropolitana,4
+Colina,Metropolitana,4
+Curacaví,Metropolitana,4
+El Monte,Metropolitana,4
+Isla de Maipo,Metropolitana,4
+Lampa,Metropolitana,4
+María Pinto,Metropolitana,4
+Melipilla,Metropolitana,4
+Padre Hurtado,Metropolitana,4
+Paine,Metropolitana,4
+Peñaflor,Metropolitana,4
+Pirque,Metropolitana,4
+San José de Maipo,Metropolitana,4
+San Pedro,Metropolitana,4
+Talagante,Metropolitana,4
+Tiltil,Metropolitana,4
+Chimbarongo,O'Higgins,4
+Chépica,O'Higgins,4
+Codegua,O'Higgins,4
+Coltauco,O'Higgins,4
+Doñihue,O'Higgins,4
+Las Cabras,O'Higgins,4
+Lolol,O'Higgins,4
+Marchigüe,O'Higgins,4
+Mostazal,O'Higgins,4
+Nancagua,O'Higgins,4
+Olivar,O'Higgins,4
+Peumo,O'Higgins,4
+Requínoa,O'Higgins,4
+Algarrobo,Valparaíso,4
+Cabildo,Valparaíso,4
+Calle Larga,Valparaíso,4
+Cartagena,Valparaíso,4
+Catemu,Valparaíso,4
+El Quisco,Valparaíso,4
+El Tabo,Valparaíso,4
+Hijuelas,Valparaíso,4
+La Cruz,Valparaíso,4
+La Ligua,Valparaíso,4
+Llaillay,Valparaíso,4
+Nogales,Valparaíso,4
+Olmué,Valparaíso,4
+Papudo,Valparaíso,4
+Puchuncaví,Valparaíso,4
+Putaendo,Valparaíso,4
+San Esteban,Valparaíso,4
+Santo Domingo,Valparaíso,4
+Zapallar,Valparaíso,4
+Coelemu,Ñuble,4
+Coihueco,Ñuble,4
+El Carmen,Ñuble,4
+Pemuco,Ñuble,4
+Pinto,Ñuble,4
+Quillón,Ñuble,4
+San Fabián,Ñuble,4
+San Nicolás,Ñuble,4
+Ñiquén,Ñuble,4

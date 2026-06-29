@@ -1,0 +1,28 @@
+# ===== SECRETOS — nunca versionar =====
+.env
+*.env
+**/.env
+*.key
+*.pem
+secrets*
+
+# ===== Datos generados (se traen de vuelta, no se versionan) =====
+raw/
+db/
+state/
+logs/
+reports/
+work/
+analysis/data.json
+
+# ===== Scraper de gosom (lo clona y compila setup) =====
+google-maps-scraper/
+
+# ===== Binarios / caches =====
+*.exe
+google_maps_scraper
+__pycache__/
+*.pyc
+node_modules/
+.DS_Store
+Thumbs.db

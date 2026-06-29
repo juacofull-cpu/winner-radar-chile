@@ -1,0 +1,68 @@
+restaurant
+cafe
+bar
+comida rapida
+pizzeria
+sushi
+rotiseria
+panaderia
+pasteleria
+heladeria
+minimarket
+almacen
+supermercado
+botilleria
+carniceria
+verduleria
+rotiseria de pollos
+tienda naturista
+farmacia
+optica
+ferreteria
+ferreteria electrica
+materiales de construccion
+cerrajeria
+vidrieria
+libreria
+papeleria
+jugueteria
+perfumeria
+tienda de ropa
+zapateria
+joyeria
+relojeria
+floreria
+cotillon
+tienda de celulares
+tienda de computacion
+electrodomesticos
+mueblería
+bazar
+peluqueria
+barberia
+spa
+centro de estetica
+gimnasio
+peluqueria canina
+tienda de mascotas
+veterinaria
+lavanderia
+lavaseco
+sastreria
+imprenta
+fotocopias
+clinica dental
+kinesiologia
+podologia
+nutricionista
+psicologo
+taller mecanico
+automotora
+lubricentro
+vulcanizacion
+gomeria
+repuestos automotriz
+hotel
+hostal
+cabañas
+jardin infantil

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Winner Radar · Tiendas Chile — Inteligencia de Ventas</title>
+<script src="chart.min.js"></script>
+<style>
+  :root{
+    --bg:#0b0f17; --panel:#131a26; --panel2:#1a2333; --line:#243044;
+    --txt:#e6edf6; --mut:#8a97ab; --acc:#38bdf8;
+    --A:#ef4444; --B:#f59e0b; --C:#3b82f6; --D:#6b7280;
+  }
+  *{box-sizing:border-box} html,body{margin:0}
+  body{background:var(--bg); color:var(--txt); font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+  a{color:var(--acc)}
+  header{position:sticky;top:0;z-index:20;background:rgba(11,15,23,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);padding:14px 22px}
+  .htop{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  h1{font-size:18px;margin:0;font-weight:700;letter-spacing:.2px}
+  h1 small{color:var(--mut);font-weight:400;font-size:12px}
+  .seg{display:flex;background:var(--panel2);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .seg button{background:none;border:0;color:var(--mut);padding:8px 14px;cursor:pointer;font-size:13px;font-weight:600}
+  .seg button.on{background:var(--acc);color:#04121c}
+  .kpis{display:flex;gap:10px;margin-left:auto;flex-wrap:wrap}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:7px 13px;min-width:96px}
+  .kpi b{display:block;font-size:19px;line-height:1.1} .kpi span{color:var(--mut);font-size:11px}
+  .wrap{padding:18px 22px;max-width:1500px;margin:0 auto}
+  .filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+  .filters select,.filters input{background:var(--panel);border:1px solid var(--line);color:var(--txt);
+    padding:8px 10px;border-radius:8px;font-size:13px}
+  .chips{display:flex;gap:6px}
+  .chip{border:1px solid var(--line);background:var(--panel);color:var(--mut);padding:7px 11px;border-radius:8px;
+    cursor:pointer;font-weight:700;font-size:12px;user-select:none}
+  .chip.on[data-t=A]{background:var(--A);color:#fff;border-color:var(--A)}
+  .chip.on[data-t=B]{background:var(--B);color:#1a1206;border-color:var(--B)}
+  .chip.on[data-t=C]{background:var(--C);color:#fff;border-color:var(--C)}
+  .chip.on[data-t=D]{background:var(--D);color:#fff;border-color:var(--D)}
+  .btn{background:var(--panel2);border:1px solid var(--line);color:var(--txt);padding:8px 12px;border-radius:8px;cursor:pointer;font-size:13px}
+  .btn:hover{border-color:var(--acc)}
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .card h3{margin:0 0 10px;font-size:13px;color:var(--mut);font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+  .c6{grid-column:span 6}.c4{grid-column:span 4}.c8{grid-column:span 8}.c12{grid-column:span 12}
+  @media(max-width:1000px){.c6,.c4,.c8{grid-column:span 12}}
+  canvas{max-height:300px}
+  .tierbox{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .tierbox .t{flex:1;min-width:160px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--panel)}
+  .tierbox .t b{font-size:24px} .tierbox .t .lbl{font-size:11px;color:var(--mut)}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px}
+  th{color:var(--mut);cursor:pointer;font-weight:600;position:sticky;top:0;background:var(--panel)}
+  tbody tr:hover{background:var(--panel2)}
+  .tg{font-weight:800;padding:2px 8px;border-radius:6px;font-size:11px}
+  .tg.A{background:var(--A);color:#fff}.tg.B{background:var(--B);color:#1a1206}.tg.C{background:var(--C);color:#fff}.tg.D{background:var(--D);color:#fff}
+  .pager{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:10px;color:var(--mut)}
+  .muted{color:var(--mut)} .star{color:#fbbf24}
+  .note{font-size:12px;color:var(--mut);margin:2px 0 16px}
+</style>
+</head>
+<body>
+<header>
+  <div class="htop">
+    <h1>🎯 Winner Radar <small>· Tiendas de Chile · inteligencia de ventas</small></h1>
+    <div class="seg" id="seg">
+      <button data-m="tel" class="on">📞 Con teléfono</button>
+      <button data-m="notel">🚶 Sin teléfono</button>
+      <button data-m="all">Todos</button>
+    </div>
+    <div class="kpis" id="kpis"></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="filters">
+    <select id="f_reg"><option value="">Todas las regiones</option></select>
+    <select id="f_comuna"><option value="">Todas las comunas</option></select>
+    <input id="f_cat" list="cats" placeholder="Categoría…" style="width:180px">
+    <datalist id="cats"></datalist>
+    <div class="chips" id="f_tier">
+      <span class="chip on" data-t="A">A</span><span class="chip on" data-t="B">B</span>
+      <span class="chip on" data-t="C">C</span><span class="chip on" data-t="D">D</span>
+    </div>
+    <select id="f_star">
+      <option value="0">★ cualquiera</option><option value="1">★ ≤ 3.5 (mala)</option>
+      <option value="2">★ 3.5–4.4</option><option value="3">★ ≥ 4.5 (buena)</option>
+      <option value="9">sin reseñas</option>
+    </select>
+    <select id="f_tel">
+      <option value="">📞 cualquier teléfono</option>
+      <option value="cel">📱 Celular (dueño)</option>
+      <option value="fijo">📠 Fijo (local)</option>
+      <option value="otro">otros códigos</option>
+    </select>
+    <input id="f_q" placeholder="Buscar nombre…" style="width:160px">
+    <button class="btn" id="reset">↺ Limpiar</button>
+    <button class="btn" id="export">⬇ Exportar CSV</button>
+  </div>
+  <div class="note" id="tierdesc"></div>
+
+  <div class="tierbox" id="tierbox"></div>
+
+  <div class="grid">
+    <div class="card c4"><h3>Distribución por Tier</h3><canvas id="ch_tier"></canvas></div>
+    <div class="card c8"><h3>Top categorías por estrellas promedio (≥20 negocios)</h3><canvas id="ch_cat"></canvas></div>
+    <div class="card c6"><h3>Dispersión: estrellas vs nº de reseñas (log)</h3><canvas id="ch_scatter"></canvas></div>
+    <div class="card c6"><h3>Distribución de estrellas</h3><canvas id="ch_star"></canvas></div>
+    <div class="card c6"><h3>Top comunas (nº de negocios)</h3><canvas id="ch_comuna"></canvas></div>
+    <div class="card c6"><h3>Distribución de reseñas (rangos)</h3><canvas id="ch_rev"></canvas></div>
+  </div>
+
+  <div class="card c12" style="margin-top:14px">
+    <h3 id="tabtitle">Negocios</h3>
+    <div style="overflow:auto;max-height:560px">
+      <table id="tbl"><thead><tr>
+        <th data-k="ti">Tier</th><th data-k="n">Tienda</th><th data-k="c">Categoría</th>
+        <th data-k="reg">Región</th><th data-k="comuna">Comuna</th><th data-k="t">Teléfono</th><th data-k="r">★</th>
+        <th data-k="v">Reseñas</th><th data-k="s">Score</th><th data-k="a">Dirección</th>
+      </tr></thead><tbody id="tbody"></tbody></table>
+    </div>
+    <div class="pager"><span id="pginfo"></span>
+      <button class="btn" id="prev">◀</button><button class="btn" id="next">▶</button></div>
+  </div>
+</div>
+
+<script src="data.json"></script>
+<script>
+const D=window.DATA, ROWS=D.rows, MET=D.meta;
+const TC={A:'#ef4444',B:'#f59e0b',C:'#3b82f6',D:'#6b7280'};
+const TLBL=MET.tier_label;
+Chart.defaults.color='#8a97ab'; Chart.defaults.borderColor='#243044'; Chart.defaults.font.size=11;
+
+// ---- estado ----
+let mode='tel', tiers={A:1,B:1,C:1,D:1}, page=0, sortK='s', sortDir=-1;
+const el=id=>document.getElementById(id);
+
+// poblar selects
+[...new Set(ROWS.map(r=>r.reg))].sort().forEach(c=>{el('f_reg').insertAdjacentHTML('beforeend',`<option>${c}</option>`)});
+[...new Set(ROWS.map(r=>r.comuna))].sort().forEach(c=>{
+  el('f_comuna').insertAdjacentHTML('beforeend',`<option>${c}</option>`)});
+const catCount={}; ROWS.forEach(r=>catCount[r.c]=(catCount[r.c]||0)+1);
+Object.entries(catCount).sort((a,b)=>b[1]-a[1]).slice(0,120).forEach(([c])=>{
+  el('cats').insertAdjacentHTML('beforeend',`<option value="${c}">`)});
+
+el('tierdesc').innerHTML='<b>Tiers de oportunidad</b> (menos estrellas + menos reseñas = más “desesperado” = mejor lead): '+
+  Object.keys(TLBL).map(t=>`<span class="dot" style="background:${TC[t]}"></span>${t} = ${TLBL[t]}`).join(' &nbsp; ');
+
+// ---- filtrado ----
+function base(){ return ROWS.filter(r=> mode==='all'?true: mode==='tel'?!!r.t:!r.t ); }
+function filtered(){
+  const co=el('f_comuna').value, cat=el('f_cat').value.trim().toLowerCase(),
+        st=el('f_star').value, q=el('f_q').value.trim().toLowerCase(), tl=el('f_tel').value, rg=el('f_reg').value;
+  return base().filter(r=>{
+    if(!tiers[r.ti]) return false;
+    if(tl && r.tt!==tl) return false;
+    if(rg && r.reg!==rg) return false;
+    if(co && r.comuna!==co) return false;
+    if(cat && !r.c.toLowerCase().includes(cat)) return false;
+    if(q && !r.n.toLowerCase().includes(q)) return false;
+    if(st==='1' && !(r.r>0 && r.r<=3.5)) return false;
+    if(st==='2' && !(r.r>3.5 && r.r<4.5)) return false;
+    if(st==='3' && !(r.r>=4.5)) return false;
+    if(st==='9' && r.v!==0) return false;
+    return true;
+  });
+}
+
+// ---- charts ----
+let charts={};
+function mk(id,cfg){ if(charts[id])charts[id].destroy(); charts[id]=new Chart(el(id),cfg); }
+function agg(rows,key){const m={};rows.forEach(r=>m[r[key]]=(m[r[key]]||0)+1);return m;}
+
+function render(){
+  const F=filtered();
+  // KPIs
+  const ct=F.filter(r=>r.t).length, a=F.filter(r=>r.ti==='A').length, cel=F.filter(r=>r.tt==='cel').length;
+  el('kpis').innerHTML=
+    `<div class="kpi"><b>${F.length.toLocaleString()}</b><span>negocios</span></div>`+
+    `<div class="kpi"><b style="color:${TC.A}">${a.toLocaleString()}</b><span>Tier A (calientes)</span></div>`+
+    `<div class="kpi"><b>📱 ${cel.toLocaleString()}</b><span>celular (dueño)</span></div>`+
+    `<div class="kpi"><b>${F.filter(r=>r.e).length.toLocaleString()}</b><span>con email</span></div>`;
+  // tierbox
+  const tcnt=agg(F,'ti');
+  el('tierbox').innerHTML="ABCD".split('').map(t=>
+    `<div class="t" style="border-left:4px solid ${TC[t]}"><b style="color:${TC[t]}">${(tcnt[t]||0).toLocaleString()}</b>`+
+    `<div class="lbl">TIER ${t} · ${TLBL[t]}</div></div>`).join('');
+  // chart tier
+  mk('ch_tier',{type:'doughnut',data:{labels:"ABCD".split(''),
+    datasets:[{data:"ABCD".split('').map(t=>tcnt[t]||0),backgroundColor:"ABCD".split('').map(t=>TC[t]),borderWidth:0}]},
+    options:{plugins:{legend:{position:'right'}}}});
+  // categorías por estrellas
+  const cm={}; F.forEach(r=>{if(r.r>0){(cm[r.c]=cm[r.c]||[]).push(r.r)}});
+  const cats=Object.entries(cm).filter(([,v])=>v.length>=20)
+    .map(([c,v])=>[c,v.reduce((a,b)=>a+b,0)/v.length,v.length]).sort((a,b)=>b[1]-a[1]).slice(0,12);
+  mk('ch_cat',{type:'bar',data:{labels:cats.map(c=>c[0]),
+    datasets:[{data:cats.map(c=>c[1].toFixed(2)),backgroundColor:'#38bdf8'}]},
+    options:{indexAxis:'y',scales:{x:{min:3,max:5}},plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:c=>c.raw+'★ (n='+cats[c.dataIndex][2]+')'}}}}});
+  // scatter
+  let S=F; if(S.length>3500){const step=Math.ceil(S.length/3500);S=S.filter((_,i)=>i%step===0);}
+  mk('ch_scatter',{type:'scatter',data:{datasets:"ABCD".split('').map(t=>({label:t,
+    data:S.filter(r=>r.ti===t).map(r=>({x:r.r,y:Math.log10(r.v+1)})),
+    backgroundColor:TC[t]+'cc',pointRadius:2}))},
+    options:{scales:{x:{title:{display:true,text:'estrellas'},min:0,max:5},
+      y:{title:{display:true,text:'log10(reseñas+1)'}}},plugins:{legend:{position:'right'}}}});
+  // hist estrellas
+  const sb=[0,0,0,0,0,0]; // 0=sin, 1=<3.5,2=3.5-4,3=4-4.5,4=4.5-4.8,5=4.8+
+  F.forEach(r=>{const v=r.r; sb[v===0?0:v<3.5?1:v<4?2:v<4.5?3:v<4.8?4:5]++});
+  mk('ch_star',{type:'bar',data:{labels:['sin reseña','<3.5','3.5–4','4–4.5','4.5–4.8','4.8–5'],
+    datasets:[{data:sb,backgroundColor:['#6b7280','#ef4444','#f59e0b','#eab308','#84cc16','#22c55e']}]},
+    options:{plugins:{legend:{display:false}}}});
+  // comunas
+  const com=Object.entries(agg(F,'comuna')).sort((a,b)=>b[1]-a[1]).slice(0,12);
+  mk('ch_comuna',{type:'bar',data:{labels:com.map(c=>c[0]),datasets:[{data:com.map(c=>c[1]),backgroundColor:'#a78bfa'}]},
+    options:{indexAxis:'y',plugins:{legend:{display:false}}}});
+  // reseñas buckets
+  const rb=[0,0,0,0,0,0]; const lab=['0','1–10','11–50','51–150','151–500','500+'];
+  F.forEach(r=>{const v=r.v; rb[v===0?0:v<=10?1:v<=50?2:v<=150?3:v<=500?4:5]++});
+  mk('ch_rev',{type:'bar',data:{labels:lab,datasets:[{data:rb,backgroundColor:'#f472b6'}]},
+    options:{plugins:{legend:{display:false}}}});
+  // tabla
+  page=0; renderTable(F);
+}
+
+function renderTable(F){
+  F.sort((a,b)=>{let x=a[sortK],y=b[sortK]; if(typeof x==='string'){x=x||'';y=y||''} return (x>y?1:x<y?-1:0)*sortDir});
+  const per=50, tot=F.length, pages=Math.ceil(tot/per);
+  page=Math.max(0,Math.min(page,pages-1));
+  const slice=F.slice(page*per,page*per+per);
+  el('tabtitle').textContent=`Negocios (${tot.toLocaleString()})`;
+  el('tbody').innerHTML=slice.map(r=>`<tr>
+    <td><span class="tg ${r.ti}">${r.ti}</span></td>
+    <td title="${r.n}">${r.n}</td><td class="muted">${r.c}</td><td>${r.reg}</td><td>${r.comuna}</td>
+    <td>${r.t?(r.tt==='cel'?'📱 ':r.tt==='fijo'?'📠 ':'')+r.t:'<span class=muted>—</span>'}</td>
+    <td>${r.r?`<span class=star>★</span>${r.r}`:'<span class=muted>—</span>'}</td>
+    <td>${r.v.toLocaleString()}</td><td><b>${r.s}</b></td>
+    <td class="muted" title="${r.a}">${r.a}</td></tr>`).join('');
+  el('pginfo').textContent=`pág ${page+1}/${pages||1} · ${tot.toLocaleString()} resultados`;
+  window._F=F;
+}
+
+// ---- eventos ----
+el('seg').onclick=e=>{const b=e.target.closest('button');if(!b)return;
+  mode=b.dataset.m;[...el('seg').children].forEach(x=>x.classList.toggle('on',x===b));render()};
+el('f_tier').onclick=e=>{const c=e.target.closest('.chip');if(!c)return;
+  const t=c.dataset.t;tiers[t]=!tiers[t];c.classList.toggle('on',tiers[t]);render()};
+['f_reg','f_comuna','f_cat','f_star','f_q','f_tel'].forEach(id=>el(id).addEventListener('input',render));
+el('reset').onclick=()=>{el('f_reg').value='';el('f_comuna').value='';el('f_cat').value='';el('f_star').value='0';el('f_q').value='';el('f_tel').value='';
+  tiers={A:1,B:1,C:1,D:1};[...el('f_tier').children].forEach(c=>c.classList.add('on'));render()};
+el('prev').onclick=()=>{page--;renderTable(window._F)};
+el('next').onclick=()=>{page++;renderTable(window._F)};
+document.querySelectorAll('#tbl th').forEach(th=>th.onclick=()=>{
+  const k=th.dataset.k; if(sortK===k)sortDir*=-1; else{sortK=k;sortDir=(k==='n'||k==='c'||k==='comuna')?1:-1}
+  page=0;renderTable(window._F)});
+el('export').onclick=()=>{
+  const F=window._F, head=['region','comuna','tienda','categoria','telefono','tipo_tel','email','estrellas','reseñas','tier','score','direccion'];
+  const esc=s=>'"'+String(s).replace(/"/g,'""')+'"';
+  const csv=[head.join(',')].concat(F.map(r=>[r.reg,r.comuna,r.n,r.c,r.t,r.tt,r.e,r.r,r.v,r.ti,r.s,r.a].map(esc).join(','))).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv'}));
+  a.download='leads_filtrados.csv';a.click()};
+
+render();
+</script>
+</body>
+</html>
