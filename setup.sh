@@ -14,7 +14,7 @@ go version
 
 # 2) Python deps
 python3 -m pip install --quiet --upgrade pip
-python3 -m pip install --quiet psutil openpyxl
+python3 -m pip install --quiet psutil openpyxl requests
 
 # 3) Clonar y compilar gosom (MIT)
 [ -d google-maps-scraper ] || git clone https://github.com/gosom/google-maps-scraper.git

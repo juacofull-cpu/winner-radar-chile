@@ -44,6 +44,14 @@ comuna, agotando todas las keywords. Al cerrar una comuna, mergea a la base dedu
 - `python scripts/export_final.py` → `reports/chile-tiendas.xlsx`.
 - **Solo las bases de datos (`db/`, `reports/`) se traen de vuelta** al usuario; el resto es proceso.
 
+## FASE 2 — Enriquecer emails (cuando la cobertura ya avanzó)
+La pasada de cobertura va SIN email (rápida). Para sacar correos, corre la fase 2 sobre la base:
+`python scripts/enrich_emails.py`  (visita las webs de los negocios con HTTP plano, concurrente,
+SIN navegador → rápido, liviano, no toca Google). Aprovecha el PC: `set EMAIL_WORKERS=150` y vuela.
+Es reanudable (`db/email_cache.json`) e idempotente; reescribe la columna `emails` en `db/chile.csv`.
+Hazla cuando el orquestador ya haya cubierto bastante (no compite con el scraping). Esperá ~13-20%
+de hits (muchos negocios no publican email).
+
 ## Recetas
 - Reprocesar una comuna suelta (ej. quedó vacía):
   `./google-maps-scraper/google_maps_scraper(.exe) -input work/<slug>.txt -results raw/<slug>.csv -depth 8 -c 2 -lang es -exit-on-inactivity 90s`

@@ -20,7 +20,7 @@ if (-not (Get-Command python -ErrorAction SilentlyContinue)) {
 }
 python --version
 python -m pip install --quiet --upgrade pip
-python -m pip install --quiet psutil openpyxl
+python -m pip install --quiet psutil openpyxl requests
 
 # 3) Clonar y compilar el scraper de gosom (MIT)
 if (-not (Test-Path "google-maps-scraper")) {

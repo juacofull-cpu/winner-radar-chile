@@ -43,7 +43,7 @@ stats.bat          REM panel + watchdog + self-check (córrelo cuando quieras)
 ## Estructura
 ```
 data/      comunas-chile.csv (247 comunas, prioridad) · keywords.txt (~68 rubros)
-scripts/   orchestrator · watchdog · build_master · selfcheck · panel · analysis · export_final · common
+scripts/   orchestrator · watchdog · build_master · selfcheck · panel · analysis · export_final · enrich_emails · common
 run.bat/.sh · stats.bat/.sh · setup.ps1/.sh
 analysis/  dashboard.html + chart.min.js (informe dinámico; data.json se genera)
 # raw/ db/ state/ logs/ reports/  -> se crean al correr (no se versionan)
@@ -53,6 +53,16 @@ analysis/  dashboard.html + chart.min.js (informe dinámico; data.json se genera
 - `db/chile.csv` — base canónica deduplicada (con comuna y región).
 - `reports/chile-tiendas.xlsx` — Excel filtrable.
 - `analysis/dashboard.html` — informe dinámico (tiers de oportunidad, filtros, gráficos).
+
+## Fase 2 — Enriquecer emails (opcional, rápido)
+La cobertura va sin email. Para sacar correos, después corre:
+```bash
+python scripts/enrich_emails.py          # EMAIL_WORKERS=80 por defecto
+EMAIL_WORKERS=150 python scripts/enrich_emails.py   # PC potente
+```
+Visita las webs de los negocios con HTTP plano **concurrente (sin navegador)** → muy rápido, liviano
+y **sin riesgo de baneo** (no toca Google, visita dominios variados). Reanudable e idempotente.
+Esperá ~13-20% de hits (muchos negocios no publican email).
 
 Ver [`PLAN.md`](PLAN.md) para la estrategia de cobertura y priorización.
 Motor de scraping: `gosom/google-maps-scraper` (licencia MIT).
